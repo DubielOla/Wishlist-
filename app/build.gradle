@@ -25,6 +25,9 @@ android {
   buildFeatures {
     viewBinding true
   }
+  testOptions {
+    unitTests.includeAndroidResources = true
+  }
 }
 
 dependencies {
@@ -52,6 +55,8 @@ dependencies {
   kapt "androidx.room:room-compiler:$room_version"
 
   // TUTORIAL DEPENDENCIES HERE
+  testImplementation 'org.robolectric:robolectric:4.5-alpha-3'
+  testImplementation 'androidx.test.ext:junit:1.1.2'
 
   // Testing Dependencies
   testImplementation 'junit:junit:4.13.1'
