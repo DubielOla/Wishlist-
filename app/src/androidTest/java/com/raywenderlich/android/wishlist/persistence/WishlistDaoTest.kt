@@ -50,24 +50,28 @@ class WishlistDaoTest {
 
     @Test
     fun saveWishlistsSavesData() {
-        // 1
-        val wishlist1 = Wishlist("Victoria", listOf(), 1)
-        val wishlist2 = Wishlist("Tyler", listOf(), 2)
-        wishlistDao.save(wishlist1, wishlist2)
 
-        // 2
+        val wishlist1 = WishlistFactory.makeWishlist()
+        val wishlist2 = WishlistFactory.makeWishlist()
+        wishlistDao.save(wishlist1, wishlist2)
         val testObserver: Observer<List<Wishlist>> = mock()
         wishlistDao.getAll().observeForever(testObserver)
 
-        // 3
         val listClass =
             ArrayList::class.java as Class<ArrayList<Wishlist>>
         val argumentCaptor = ArgumentCaptor.forClass(listClass)
-        // 4
         verify(testObserver).onChanged(argumentCaptor.capture())
-        // 5
         assertTrue(argumentCaptor.value.size > 0)
     }
+    @Test
+    fun findByIdRetrievesCorrectData() {
 
+        val wishlist1 = WishlistFactory.makeWishlist()
+        val wishlist2 = WishlistFactory.makeWishlist()
+        wishlistDao.save(wishlist1, wishlist2)
+        val testObserver: Observer<Wishlist> = mock()
+        wishlistDao.findById(wishlist2.id).observeForever(testObserver)
+        verify(testObserver).onChanged(wishlist2)
+    }
 
 }

@@ -39,7 +39,7 @@ import com.raywenderlich.android.wishlist.Wishlist
 interface WishlistDao {
   @Query("SELECT * FROM wishlist")
   fun getAll(): LiveData<List<Wishlist>>
-  @Query("SELECT * FROM wishlist WHERE id != :id")
+  @Query("SELECT * FROM wishlist WHERE id = :id")
   fun findById(id: Int): LiveData<Wishlist>
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun save(vararg wishlist: Wishlist)
